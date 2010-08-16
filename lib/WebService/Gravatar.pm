@@ -13,11 +13,11 @@ WebService::Gravatar - Perl interface to Gravatar API
 
 =head1 VERSION
 
-Version 0.10
+Version 0.11
 
 =cut
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 
 =head1 SYNOPSIS
@@ -25,6 +25,7 @@ our $VERSION = '0.10';
 WebService::Gravatar provides an interface to Gravatar XML-RPC API.
 
     use WebService::Gravatar;
+    use MIME::Base64;
 
     # Create a new instance of WebService::Gravatar
     my $grav = WebService::Gravatar->new(email => 'your@email.address',
@@ -47,14 +48,14 @@ WebService::Gravatar provides an interface to Gravatar XML-RPC API.
     # Read image file data
     my $data;
     {
-    	local $/ = undef;
+        local $/ = undef;
         open(F, "< my_pretty_face.png");
         $data = <F>;
         close(F);
     }
     
     # Save the image as a new userimage
-    $grav->save_data(data => $data, rating => 0);
+    $grav->save_data(data => encode_base64($data), rating => 0);
 
     ...
 
